@@ -1,0 +1,14 @@
+val df = spark.read.format("csv").option("header","true").load("file:///c:/task/emtec.csv")
+ 
+ df.show()
+ 
+  val df2 = spark.read.format("csv").option("header","true").load("file:///c:/task/emtecone.txt")
+ 
+ df2.show()
+ 
+ val df1 = df
+ .withColumn("list of fruits", regexp_replace(col("list of fruits"),"[\\[\\]\\']",""))
+ .withColumn("list fruits", explode(split(col("list of fruits"),",")))
+ .withColumnRenamed("list fruits", "fruit")
+ .select("Name","fruit")
+df1.show()
